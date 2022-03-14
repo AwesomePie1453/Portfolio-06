@@ -9,22 +9,138 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+### Introduction
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+For my 6th portfolio, I will be using R code to put together a couple graphs for my pokemon guild I am a part of, Spear Pillar. This guild has three houses, one of which, the Midnight Reapers, I am the captain of. We decided to do an inner-house tournament. Each participant (there were 12 of us) put together a team of 6 mons using standard Spear Pillar rules, but with 18 extra banned pokemon that are overused. The following data (reapers.sav) provides the kills and deaths of each pokemon used by each trainer, in addition to their item. I will be using this space to put together some charts for my guild to see
+```{r read, include=FALSE}
+library(haven)
+library(tidyverse)
+library(gridExtra)
+library(ggrepel)
+Reapers<-read_sav("Reapers.sav")
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
 ```
 
-## Including Plots
+First, here are the Kills and Deaths for each trainer
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r Names}
+Pie <- Reapers %>%
+  filter(Trainer == "Pie")
+Alex <- Reapers %>%
+  filter(Trainer == "Alex")
+Flygon <- Reapers %>%
+  filter(Trainer == "Flygon")
+Beast <- Reapers %>%
+  filter(Trainer== "Beast")
+Nuno <- Reapers %>%
+  filter(Trainer == "Nuno")
+Daizook <- Reapers %>%
+  filter(Trainer == "Daizook")
+Chrispy <- Reapers %>%
+  filter(Trainer == "Chrispy")
+MVF <- Reapers %>%
+  filter(Trainer == "MVF")
+Trees <- Reapers %>%
+  filter(Trainer == "Trees")
+Seddy <- Reapers %>%
+  filter(Trainer == "Seddy")
+Jay <- Reapers %>%
+  filter(Trainer == "Jay")
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+attach(Pie)
+PieGraph <- ggplot(data=Pie,aes(x=Deaths,y=Kills,label=Pokemon)) + 
+  geom_point(aes(color=Pokemon)) +
+  geom_text(vjust=1.4, size=3.5) + scale_x_reverse(lim=c(8,5)) + labs(title="Pie's Pokemon KD") + theme(legend.position="none", plot.title=element_text(hjust=.5))
+
+attach(Flygon)
+FlygonGraph <- ggplot(data=Flygon,aes(x=Deaths,y=Kills,label=Pokemon)) + 
+  geom_point(aes(color=Pokemon)) +
+  geom_text(vjust=1.4, size=3.5) + scale_x_reverse(lim=c(12,0)) + labs(title="Flygon's Pokemon KD") + theme(legend.position="none", plot.title=element_text(hjust=.5))
+
+attach(Alex)
+AlexGraph <- ggplot(data=Alex,aes(x=Deaths,y=Kills,label=Pokemon)) + 
+  geom_point(aes(color=Pokemon)) +
+  geom_text(vjust=1.4, size=3.5) + scale_x_reverse(lim=c(12,0)) + labs(title="Alex's Pokemon KD") + theme(legend.position="none", plot.title=element_text(hjust=.5))
+
+attach(Chrispy)
+ChrispyGraph <- ggplot(data=Chrispy,aes(x=Deaths,y=Kills,label=Pokemon)) + 
+  geom_point(aes(color=Pokemon)) +
+  geom_text(vjust=1.4, size=3.5) + scale_x_reverse(lim=c(12,0)) + labs(title="Chrispy's Pokemon KD") + theme(legend.position="none", plot.title=element_text(hjust=.5))
+
+attach(Nuno)
+NunoGraph <- ggplot(data=Nuno,aes(x=Deaths,y=Kills,label=Pokemon)) + 
+  geom_point(aes(color=Pokemon)) +
+  geom_text(vjust=1.4, size=3.5) + scale_x_reverse(lim=c(12,0)) + labs(title="Nuno's Pokemon KD") + theme(legend.position="none", plot.title=element_text(hjust=.5))
+
+attach(Trees)
+TreesGraph <- ggplot(data=Trees,aes(x=Deaths,y=Kills,label=Pokemon)) + 
+  geom_point(aes(color=Pokemon)) +
+  geom_text(vjust=1.4, size=3.5) + scale_x_reverse(lim=c(12,0)) + labs(title="Tree's Pokemon KD") + theme(legend.position="none", plot.title=element_text(hjust=.5))
+
+attach(Beast)
+BeastGraph <- ggplot(data=Beast,aes(x=Deaths,y=Kills,label=Pokemon)) + 
+  geom_point(aes(color=Pokemon)) +
+  geom_text(vjust=1.4, size=3.5) + scale_x_reverse(lim=c(12,0)) + labs(title="Beast's Pokemon KD") + theme(legend.position="none", plot.title=element_text(hjust=.5))
+
+attach(MVF)
+MVFGraph <- ggplot(data=MVF,aes(x=Deaths,y=Kills,label=Pokemon)) + 
+  geom_point(aes(color=Pokemon)) +
+  geom_text(vjust=1.4, size=3.5) + scale_x_reverse(lim=c(12,0)) + labs(title="MVF's Pokemon KD") + theme(legend.position="none", plot.title=element_text(hjust=.5))
+
+attach(Daizook)
+DaizookGraph <- ggplot(data=Daizook,aes(x=Deaths,y=Kills,label=Pokemon)) + 
+  geom_point(aes(color=Pokemon)) +
+  geom_text(vjust=1.4, size=3.5) + scale_x_reverse(lim=c(12,0)) + labs(title="Daizook's Pokemon KD") + theme(legend.position="none", plot.title=element_text(hjust=.5))
+
+attach(Seddy)
+SeddyGraph <- ggplot(data=Seddy,aes(x=Deaths,y=Kills,label=Pokemon)) + 
+  geom_point(aes(color=Pokemon)) +
+  geom_text(vjust=1.4, size=3.5) + scale_x_reverse(lim=c(12,0)) + labs(title="Seddy's Pokemon KD") + theme(legend.position="none", plot.title=element_text(hjust=.5))
+
+attach(Jay)
+JayGraph <- ggplot(data=Jay,aes(x=Deaths,y=Kills,label=Pokemon)) + 
+  geom_point(aes(color=Pokemon)) +
+  geom_text(vjust=1.4, size=3.5) + scale_x_reverse(lim=c(12,0)) + labs(title="Jay's Pokemon KD") + theme(legend.position="none", plot.title=element_text(hjust=.5))
+
+```
+
+
+
+```{r Graphs}
+grid.arrange(PieGraph, FlygonGraph, NunoGraph, JayGraph, AlexGraph, BeastGraph, TreesGraph, SeddyGraph, MVFGraph, ChrispyGraph, DaizookGraph, ncol=2)
+```
+Here are the KDs for everyone graphed
+
+
+```{r everyone}
+ggplot(data=Reapers,aes(x=Deaths,y=Kills,label=Pokemon)) + 
+  geom_point(aes(color=Pokemon)) +
+  geom_text(vjust=1.4, size=3.5) + scale_x_reverse(lim=c(12,0)) + labs(title="Reaper League's Pokemon KD") + theme(legend.position="none", plot.title=element_text(hjust=.5))
+```
+Here is the display of items
+
+```{r items}
+Reapers %>%
+ggplot(mapping = aes(x=Item)) + 
+  geom_bar(aes()) + coord_flip()
+```
+
+Here is the display of Pokemon
+
+```{r pokemon}
+Reapers %>%
+ggplot(mapping = aes(x=Pokemon)) + 
+  geom_bar(aes()) + coord_flip()
+```
+If you combine each Pokemon to see overall who was the best, it would be shown on a combined graph with Lucario. 
+
+```{r combined}
+Reapers %>%
+ggplot(mapping = aes(x=Pokemon, y=Kills, color=Deaths)) + 
+  geom_col() + coord_flip()  
+```
+
+These are the results of the Reaper Tournament!
